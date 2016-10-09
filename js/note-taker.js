@@ -25,7 +25,6 @@ function getShortBody(fullBody) {
 window.onload = function() {
     console.log("Note-Taker initialized");
 
-    // set the focus on the noteTitle field
     noteTitle.focus()
 
     // In the following line, you should include the prefixes of implementations you want to test.
@@ -99,7 +98,6 @@ window.onload = function() {
             console.log("Note opened: ", request.result.noteTitle);
         };
 
-        // set the focus on the noteBody field
         noteBody.focus()
     }
 
@@ -107,12 +105,8 @@ window.onload = function() {
         // first clear the content of the note list so that you don't get a huge long list of duplicate stuff each time the display is updated.
         noteList.innerHTML = "";
 
-        console.log("db", db);
-
         // open our object store
         var objectStore = db.transaction("notes").objectStore('notes');
-
-        console.log("obj store", objectStore);
 
         // list all of the objects in the database and display them
         objectStore.openCursor().onsuccess = function(event) {
@@ -165,7 +159,6 @@ window.onload = function() {
             }
         }
 
-        // set the focus on the noteTitle field
         noteTitle.focus()
     }
 
@@ -235,7 +228,6 @@ window.onload = function() {
                     });
                 });
 
-                // set the focus on the noteTitle field
                 noteTitle.focus()
             }
         }
@@ -263,7 +255,6 @@ window.onload = function() {
             console.log("Note was not deleted: user hit cancel.");
         }
 
-        // set the focus on the noteTitle field
         noteTitle.focus()
     }
 }

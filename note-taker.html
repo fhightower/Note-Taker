@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NOTE TAKER</title>
+
+    <!-- Import the styling for the notetaker -->
+    <!-- <link rel="stylesheet" type="text/css" href="./style/note-taker.css"> -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Import files from libraries -->
+    <script type="text/javascript" src="./lib/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/pnotify/pnotify.custom.min.js"></script>
+    <link href="./lib/pnotify/pnotify.custom.min.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+      <div class="page-header">
+        <h1>NOTED!</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar" id="note-list">
+        </div>
+
+        <div class="col-sm-9 col-md-10">
+          <div class="input-group input-group-lg col-sm-8 col-md-6">
+            <input type="text" class="form-control" id="note-title" placeholder="Note title..." aria-describedby="Enter a note title.">
+          </div>
+
+          <br/>
+
+          <div class="input-group col-sm-12 col-md-11">
+            <textarea class="form-control" id="note-body" rows="10" placeholder="What's on your mind?"></textarea>
+          </div>
+
+          <br/>
+
+          <button type="button" class="btn btn-default btn-md btn-info" id="save">
+              <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> &nbspSAVE
+            </button>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="js/note-taker.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>

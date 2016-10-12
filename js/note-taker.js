@@ -47,7 +47,7 @@ window.onload = function() {
 
     // if the database was not properly initialized...
     DBOpenRequest.onerror = function(event) {
-        console.log("! Error initializing database: ", event.target.error.name);
+        console.log("! Error initializing database: ", event.target.errorCode);
     };
 
     // if the database was properly initialized...
@@ -68,7 +68,7 @@ window.onload = function() {
         var db = event.target.result;
 
         db.onerror = function(event) {
-            console.log("! Error loading database");
+            console.log("! Error loading database: ", event.target.errorCode);
         };
 
         // Create an objectStore for this database
@@ -190,8 +190,8 @@ window.onload = function() {
                 displayExistingNotes();
             };
 
-            transaction.onerror = function() {
-                console.log("! Error performing transaction: ", transaction.error);
+            transaction.onerror = function(event) {
+                console.log("! Error performing transaction: ", event.target.errorCode);
             };
 
             // call an object store that's already been added to the database
@@ -216,7 +216,7 @@ window.onload = function() {
 
             objectStoreRequest.onerror = function(event) {
                 // The likely cause of this error is that the user is trying to save a note with a title that already exists.  This system does not allow for duplicate titles
-                console.log("Failed to add new note to database (likely because a note with the same title already exists)", event);
+                console.log("Failed to add new note to database (likely because a note with the same title already exists): ", event.target.errorCode);
 
                 // create a pnotify message displaying a notification for the user
                 PNotify.prototype.options.mouse_reset = false;

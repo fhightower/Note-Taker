@@ -39,6 +39,7 @@ function openNote(event) {
 }
 
 function displayExistingNotes() {
+    console.log("Displaying existing notes");
     // clear existing content to avoid duplicates
     noteList.innerHTML = "";
 
@@ -47,7 +48,6 @@ function displayExistingNotes() {
 
     // list all of the notes in the database
     objectStore.openCursor().onsuccess = function(event) {
-        console.log("Displaying existing notes");
         var cursor = event.target.result;
 
         if(cursor) {  // if there are items in the database, display them

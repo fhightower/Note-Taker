@@ -156,6 +156,12 @@ function deleteNote(event) {
         // report that the data item has been deleted
         request.onsuccess = function() {
             console.log("Note deleted: ", deletingNoteID);
+
+            // remove the possibility to update the note if the note being viewed was the one that was just deleted
+            if (updateButton.getAttribute("note-id") == deletingNoteID) {
+                updateButton.setAttribute("note-id", undefined);
+                updateButton.style.visibility = 'hidden';
+            }
         };
     } else {
         console.log("Note was not deleted: user hit cancel.");

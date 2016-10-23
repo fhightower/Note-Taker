@@ -26,25 +26,39 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar" id="note-list">
+        <div class="col-xs-3 col-sm-3 col-md-2 sidebar" id="note-list">
         </div>
 
-        <div class="col-sm-9 col-md-10">
-          <div class="input-group input-group-lg col-sm-8 col-md-6">
+        <div class="col-sm-11 col-md-10">
+          <div class="input-group input-group-lg col-sm-6 col-md-9">
             <input type="text" class="form-control" id="note-title" placeholder="Note title..." aria-describedby="Enter a note title.">
           </div>
 
           <br/>
 
-          <div class="input-group col-sm-12 col-md-11">
+          <div class="input-group col-sm-9 col-md-11">
             <textarea class="form-control" id="note-body" rows="10" placeholder="What's on your mind?"></textarea>
           </div>
 
           <br/>
 
-          <button type="button" class="btn btn-default btn-md btn-info" id="save">
-              <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> &nbspSAVE
-            </button>
+          <button type="button" class="btn btn-default btn-md btn-primary" id="save">
+              <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> &nbspSAVE NEW
+          </button>
+
+          <button type="button" class="btn btn-default btn-md btn-success" id="update" style="visibility: hidden;">
+              <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> &nbspUPDATE EXISTING
+          </button>
+
+          <!-- <button type="button" class="btn btn-default btn-md btn-warning" id="clear">
+              <span class="glyphicon glyphicon-erase" aria-hidden="true"></span> &nbspClear
+          </button> -->
+
+          <br/><br/><br/>
+
+          <button type="button" class="btn btn-default btn-md btn-danger" id="delete" onclick="deleteDB()">
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete ALL Notes
+          </button>
         </div>
       </div>
 

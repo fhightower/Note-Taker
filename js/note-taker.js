@@ -54,8 +54,8 @@ function displayExistingNotes() {
             var thisNoteContainer = document.createElement('div');
             var thisNote = document.createElement('div');
 
-            shortTitle = getShortTitle(cursor.value.noteTitle);
-            shortBody = getShortBody(cursor.value.noteBody);
+            var shortTitle = getShortTitle(cursor.value.noteTitle);
+            var shortBody = getShortBody(cursor.value.noteBody);
 
             thisNote.innerHTML = "<b>" + shortTitle + "</b>" + " - " + shortBody;
 

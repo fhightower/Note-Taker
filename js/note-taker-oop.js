@@ -1,17 +1,3 @@
-"use strict";
-
-// todo: update all of the calls throughout the code to support oop
-
-var NOTELIST = document.getElementById('note-list');
-var NOTETITLE = document.getElementById('note-title');
-var NOTEBODY = document.getElementById('note-body');
-var SAVEBUTTON = document.getElementById('save');
-SAVEBUTTON.addEventListener('click', addData, false);
-
-var UPDATEBUTTON = document.getElementById('update');
-UPDATEBUTTON.setAttribute("note-id", undefined);
-UPDATEBUTTON.addEventListener('click', updateNote, false);
-
 var NOTETAKER = NOTETAKER || {
     db: undefined,
 };
@@ -21,7 +7,7 @@ NOTETAKER.openNote = function(event) {
     var openingNoteID = Number(event.target.getAttribute('note-id'));
     console.log("Preparing to open note with ID: ", openingNoteID);
 
-    var objectStore = db.transaction(["notes"]).objectStore("notes");
+    var objectStore = NOTETAKER.db.transaction(["notes"]).objectStore("notes");
     var request = objectStore.get(openingNoteID);
 
     request.onerror = function(event) {
@@ -30,6 +16,7 @@ NOTETAKER.openNote = function(event) {
 
     request.onsuccess = function(event) {
         console.log("Successfully opened note ", openingNoteID);
+        console.log("data", event.target.result);
         var data = event.target.result;
 
         // display the data for this note
@@ -48,7 +35,7 @@ NOTETAKER.displayExistingNotes = function() {
     NOTELIST.innerHTML = "";
 
     // open object store
-    var objectStore = db.transaction("notes").objectStore('notes');
+    var objectStore = NOTETAKER.db.transaction("notes").objectStore('notes');
 
     // list all of the notes in the database
     objectStore.openCursor().onsuccess = function(event) {
@@ -58,8 +45,8 @@ NOTETAKER.displayExistingNotes = function() {
             var thisNoteContainer = document.createElement('div');
             var thisNote = document.createElement('div');
 
-            var shortTitle = getShortTitle(cursor.value.noteTitle);
-            var shortBody = getShortBody(cursor.value.noteBody);
+            var shortTitle = NOTETAKERUTILITY.getShortTitle(cursor.value.noteTitle);
+            var shortBody = NOTETAKERUTILITY.getShortBody(cursor.value.noteBody);
 
             thisNote.innerHTML = "<b>" + shortTitle + "</b>" + " - " + shortBody;
 
@@ -68,7 +55,7 @@ NOTETAKER.displayExistingNotes = function() {
             thisNote.setAttribute("title", "Click to Edit");
 
             thisNote.onclick = function(event) {
-                openNote(event);
+                NOTETAKER.openNote(event);
             }
 
             // create a delete button inside each list item, giving it an event handler so that it runs the deleteButton()
@@ -85,7 +72,7 @@ NOTETAKER.displayExistingNotes = function() {
             deleteButton.setAttribute('note-id', cursor.value.id);
             deleteButton.setAttribute('note-title', cursor.value.noteTitle);
             deleteButton.onclick = function(event) {
-                deleteNote(event);
+                NOTETAKER.deleteNote(event);
             }
 
             // put the item item inside the note list
@@ -118,7 +105,7 @@ NOTETAKER.addData = function(event) {
         var newNote = { noteTitle: NOTETITLE.value, noteBody: NOTEBODY.value };
 
         // open a read/write db transaction, ready for adding the data
-        var objectStore = db.transaction(["notes"], "readwrite").objectStore("notes");
+        var objectStore = NOTETAKER.db.transaction(["notes"], "readwrite").objectStore("notes");
         var request = objectStore.add(newNote);
 
         request.onerror = function(event) {
@@ -137,7 +124,7 @@ NOTETAKER.addData = function(event) {
 
     UPDATEBUTTON.setAttribute("note-id", undefined);
     UPDATEBUTTON.style.visibility = 'hidden';
-    displayExistingNotes();
+    NOTETAKER.displayExistingNotes();
 }
 
 NOTETAKER.deleteNote = function(event) {
@@ -149,7 +136,7 @@ NOTETAKER.deleteNote = function(event) {
     // confirm that the user really wants to delete the note
     if (confirm("Are you sure you want to delete this note: " + deletingNoteTitle + "?") == true) {
         // open a database transaction and delete the note, finding it by the name we retrieved above
-        var objectStore = db.transaction(["notes"], "readwrite").objectStore("notes");
+        var objectStore = NOTETAKER.db.transaction(["notes"], "readwrite").objectStore("notes");
         var request = objectStore.delete(deletingNoteID);
 
         // report error
@@ -171,14 +158,14 @@ NOTETAKER.deleteNote = function(event) {
         console.log("Note was not deleted: user hit cancel.");
     }
 
-    displayExistingNotes();
+    NOTETAKER.displayExistingNotes();
 }
 
 NOTETAKER.updateNote = function(event) {
     var updatingNoteID = Number(event.target.getAttribute('note-id'));
     console.log("Updating note ", updatingNoteID);
 
-    var objectStore = db.transaction(["notes"], "readwrite").objectStore("notes");
+    var objectStore = NOTETAKER.db.transaction(["notes"], "readwrite").objectStore("notes");
     var request = objectStore.get(updatingNoteID);
 
     request.onerror = function(event) {
@@ -207,7 +194,7 @@ NOTETAKER.updateNote = function(event) {
             UPDATEBUTTON.style.visibility = 'hidden';
             NOTETITLE.value = "";
             NOTEBODY.value = "";
-            displayExistingNotes();
+            NOTETAKER.displayExistingNotes();
         };
     };
 }
@@ -280,10 +267,10 @@ window.onload = function() {
         console.log("Indexed-DB initialized");
 
         // store the result of opening the database in the db variable. This is used a lot below
-        db = DBOpenRequest.result;
+        NOTETAKER.db = DBOpenRequest.result;
 
         // Run the displayExistingNotes() function to populate the note list with all the to-do list data already in the IDB
-        displayExistingNotes();
+        NOTETAKER.displayExistingNotes();
     };
 
     // This event handles the event whereby a new version of the database needs to be created
@@ -305,3 +292,13 @@ window.onload = function() {
         console.log("Object store created");
     };
 }
+
+var NOTELIST = document.getElementById('note-list');
+var NOTETITLE = document.getElementById('note-title');
+var NOTEBODY = document.getElementById('note-body');
+var SAVEBUTTON = document.getElementById('save');
+SAVEBUTTON.addEventListener('click', NOTETAKER.addData, false);
+
+var UPDATEBUTTON = document.getElementById('update');
+UPDATEBUTTON.setAttribute("note-id", undefined);
+UPDATEBUTTON.addEventListener('click', NOTETAKER.updateNote, false);

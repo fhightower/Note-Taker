@@ -16,7 +16,6 @@ NOTETAKER.openNote = function(event) {
 
     request.onsuccess = function(event) {
         console.log("Successfully opened note ", openingNoteID);
-        console.log("data", event.target.result);
         var data = event.target.result;
 
         // display the data for this note

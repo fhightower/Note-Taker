@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NOTE TAKER</title>
+    <title>Note Taker</title>
 
     <!-- Import the styling for the notetaker -->
     <link rel="stylesheet" type="text/css" href="./style/note-taker.css">
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 
     <!-- Import files from libraries -->
     <script type="text/javascript" src="./js/lib/jquery.min.js"></script>
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div id="noteTaker" class="container-fluid">
       <div class="page-header">
-        <h1>NOTED!</h1>
+        <h1>Note Taker</h1>
       </div>
 
       <div class="row">
@@ -33,16 +33,16 @@
           <br/>
 
           <div class="input-group col-sm-9 col-md-11">
-            <textarea class="form-control" id="note-body" rows="10" placeholder="Do explain..."></textarea>
+            <textarea class="form-control" id="note-body" rows="10" placeholder="Please explain..."></textarea>
           </div>
 
           <br/>
 
-          <button type="button" class="btn btn-default btn-md btn-primary" id="save">
+          <button type="button" class="btn btn-default btn-md btn-primary" id="save" v-on:click="addNote">
               <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> &nbspSAVE NEW
           </button>
 
-          <button type="button" class="btn btn-default btn-md btn-success" id="update" style="visibility: hidden;">
+          <button type="button" class="btn btn-default btn-md btn-success" id="update" v-if="editingNote" v-on:click="updateNote">
               <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> &nbspUPDATE EXISTING
           </button>
 
@@ -52,16 +52,17 @@
 
           <br/><br/><br/>
 
-          <button type="button" class="btn btn-default btn-md btn-danger" id="delete" onclick="NOTETAKER.deleteDB()">
+          <button type="button" class="btn btn-default btn-md btn-danger" id="delete" v-on:click="deleteDB">
               <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete ALL Notes
           </button>
         </div>
       </div> <!-- end row -->
     </div> <!-- end fluid container -->
 
-    <script src="js/note-taker-oop.js"></script>
+    <script src="../vue/dist/vue.js"></script>
+    <script src="js/note-taker.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
 </body>
 </html>

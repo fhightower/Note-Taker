@@ -22,8 +22,9 @@ window.onload = function() {
 
     // if the database was NOT properly initialized...
     DBOpenRequest.onerror = function(event) {
-        // TODO: jgrowl error here
-        console.log("! Error initializing database: ", event.target.error.name, " - ", event.target.error);
+        var message = `Error initializing database: ${event.target.error.name} ${event.target.error}`;
+        $.jGrowl(message, {group: 'failure-growl'});
+        console.error(message);
     };
 
     // if the database was properly initialized...
@@ -41,8 +42,9 @@ window.onload = function() {
         var db = event.target.result;
 
         db.onerror = function(event) {
-            // TODO: add jgrowl here
-            console.log("! Error loading database: ", event.target.error.name);
+            var message = `Error loading database: ${event.target.error.name} ${event.target.error}`;
+            $.jGrowl(message, {group: 'failure-growl'});
+            console.error(message);
         };
 
         // Create an objectStore for this database
@@ -121,7 +123,7 @@ var NOTETAKER = new Vue({
             var _this = this;
 
             if(_this.noteTitle === '') {
-                // TODO: jgrowl error here
+                $.jGrowl("Please enter a name for the note", {group: 'warning-growl'});
                 return;
             } else {
                 // grab the values entered into the form fields and store them in an object ready for being inserted into the IDB
@@ -132,11 +134,13 @@ var NOTETAKER = new Vue({
                 var request = objectStore.add(newNote);
 
                 request.onerror = function(event) {
-                    // TODO: add jgrowl here
+                    var message = `Error saving note: ${event.target.error.name} ${event.target.error}`;
+                    $.jGrowl(message, {group: 'failure-growl'});
+                    console.error(message);
                 };
 
                 request.onsuccess = function(event) {
-                    // TODO: add jgrowl here
+                    $.jGrowl('Note saved', {group: 'success-growl'});
 
                     // clear the form, ready for adding the next entry
                     _this.noteTitle = "";
@@ -167,13 +171,14 @@ var NOTETAKER = new Vue({
 
                 // report error
                 request.onerror = function(event) {
-                    // TODO: add jgrowl here
-                    console.log("! Error deleting note: ", event.target.error.name);
+                    var message = `Error deleting note: ${event.target.error.name} ${event.target.error}`;
+                    $.jGrowl(message, {group: 'failure-growl'});
+                    console.error(message);
                 };
 
                 // report that the data item has been deleted
                 request.onsuccess = function() {
-                    // TODO: add jgrowl here
+                    $.jGrowl('Note deleted', {group: 'success-growl'});
                 };
 
                 NOTETAKER.displayExistingNotes();
@@ -187,8 +192,9 @@ var NOTETAKER = new Vue({
             var request = objectStore.get(updatingNoteID);
 
             request.onerror = function(event) {
-                // TODO: add jgrowl here
-                console.log("! Error retrieving the note with id ", updatingNoteID, ": ", event.target.error.name);
+                var message = `Error retrieving note to update it: ${event.target.error.name} ${event.target.error}`;
+                $.jGrowl(message, {group: 'failure-growl'});
+                console.error(message);
             };
 
             request.onsuccess = function(event) {
@@ -202,8 +208,9 @@ var NOTETAKER = new Vue({
                 var requestUpdate = objectStore.put(data);
 
                 requestUpdate.onerror = function(event) {
-                    // TODO: add jgrowl here...
-                    console.log("! Error updating the note with id ", updatingNoteID, ": ", event.target.error.name);
+                    var message = `Error updating note: ${event.target.error.name} ${event.target.error}`;
+                    $.jGrowl(message, {group: 'failure-growl'});
+                    console.error(message);
                 };
 
                 requestUpdate.onsuccess = function(event) {
